@@ -1,0 +1,175 @@
+package com.github.kamppix.twodminecraft.world;
+
+import java.util.Random;
+
+import com.github.kamppix.twodminecraft.tiles.Tiles;
+
+public class WorldGenerator {
+	
+	private Random rng;
+	
+	private float smAmpl = 1.1f;
+	private float smFreq = 30f;
+	private float medAmpl = 5f;
+	private float medFreqA = 100f;
+	private float medFreqB = 19.5f;
+	private float lgAmpl = 20f;
+	private float lgFreq = 500f;
+	
+	public WorldGenerator(int seed) {
+		this.rng = new Random(seed);
+	}
+	
+	public void generateChunk(World world, Chunk chunk) {
+
+		int worldX = chunk.getX() * 256;
+		Random tileRng = new Random((long) (2 * smAmpl * Math.sin((worldX + worldX)/smFreq)
+				+ 2 * medAmpl * Math.sin((worldX + worldX)/medFreqA) * Math.sin((worldX + worldX)/medFreqB)
+				+ 2 * lgAmpl * Math.sin((worldX + worldX)/lgFreq)));
+		
+		for (int chunkX = 0; chunkX < 256; chunkX++) {
+			
+			int y = (int) (64f + 
+					+ 2 * smAmpl * Math.sin((worldX + chunkX)/smFreq)
+					+ 2 * medAmpl * Math.sin((worldX + chunkX)/medFreqA) * Math.sin((worldX + chunkX)/medFreqB)
+					+ 2 * lgAmpl * Math.sin((worldX + chunkX)/lgFreq)
+					);
+			
+			groundLayer(world, chunk, chunkX, y);
+			
+			if (tileRng.nextFloat() < 0.5) {
+				foliage(world, chunk, worldX, chunkX, y);
+			}
+		}
+	}
+	
+	public void groundLayer(World world, Chunk chunk, int x, int y) {
+		chunk.setTile(x, 0, Tiles.BEDROCK);
+		
+		if (rng.nextFloat() < 0.8) chunk.setTile(x, 1, Tiles.BEDROCK);
+			else chunk.setTile(x, 1, Tiles.STONE);
+		if (rng.nextFloat() < 0.6) chunk.setTile(x, 2, Tiles.BEDROCK);
+			else chunk.setTile(x, 2, Tiles.STONE);
+		if (rng.nextFloat() < 0.4) chunk.setTile(x, 3, Tiles.BEDROCK);
+			else chunk.setTile(x, 3, Tiles.STONE);
+		if (rng.nextFloat() < 0.2) chunk.setTile(x, 4, Tiles.BEDROCK);
+			else chunk.setTile(x, 4, Tiles.STONE);
+		
+		for (int i = y; i > 4; i--) {
+			if (i == y) chunk.setTile(x, i, Tiles.GRASS_BLOCK);
+			else if (i == y - 1) chunk.setTile(x, i, Tiles.DIRT);
+			else if (i == y - 2) chunk.setTile(x, i, Tiles.DIRT);
+			else if (i == y - 3) chunk.setTile(x, i, Tiles.DIRT);
+			else chunk.setTile(x, i, Tiles.STONE);
+		}
+	}
+	
+	public void foliage(World world, Chunk chunk, int worldX, int x, int y) {
+		int i = (int) ( 
+				+ 2 * smAmpl * Math.sin((worldX + x)/smFreq)
+				+ 2 * medAmpl * Math.sin((worldX + x)/medFreqA) * Math.sin((worldX + x)/medFreqB)
+				+ 2 * lgAmpl * Math.sin((worldX + x)/lgFreq)
+				);
+//		System.out.println(i);
+		if (i < 0) chunk.setTile(x, y + 1, Tiles.GRASS);
+		else {
+			chunk.setTile(x, y + 1, Tiles.TALL_GRASS_BOTTOM);
+			chunk.setTile(x, y + 2, Tiles.TALL_GRASS_TOP);
+		}
+	}
+	
+	public void tree(World world, Chunk chunk, int x, int y) {
+		chunk.setTile(x, y, Tiles.DIRT);
+		int i = rng.nextInt(6);
+		if (i == 0) oakTree(world, chunk, x, y);
+		if (i == 1) birchTree(world, chunk, x, y);
+		if (i == 2) spruceTree(world, chunk, x, y);
+		if (i == 3) jungleTree(world, chunk, x, y);
+		if (i == 4) oakTree(world, chunk, x, y);
+		if (i == 5) birchTree(world, chunk, x, y);
+	}
+	
+	public void oakTree(World world, Chunk chunk, int x, int y) {
+		int trunkHeight = rng.nextInt(3) + 4;
+		for (int i = trunkHeight; i > 0; i--) {
+			chunk.setTile(x, y + i, Tiles.OAK_LOG);
+		}
+		chunk.setTile(x - 2, y + trunkHeight - 2, Tiles.OAK_LEAVES);
+		chunk.setTile(x - 2, y + trunkHeight - 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 2, Tiles.OAK_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight, Tiles.OAK_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight + 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 2, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight + 1, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 2, Tiles.OAK_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 1, Tiles.OAK_LEAVES);
+	}
+	
+	public void birchTree(World world, Chunk chunk, int x, int y) {
+		int trunkHeight = rng.nextInt(3) + 5;
+		for (int i = trunkHeight; i > 0; i--) {
+			chunk.setTile(x, i + y, Tiles.BIRCH_LOG);
+		}
+		chunk.setTile(x - 2, y + trunkHeight - 2, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x - 2, y + trunkHeight - 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 2, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight + 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 2, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight + 1, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 2, Tiles.BIRCH_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 1, Tiles.BIRCH_LEAVES);
+	}
+	
+	public void spruceTree(World world, Chunk chunk, int x, int y) {
+		int trunkHeight = rng.nextInt(1) + 4;
+		for (int i = trunkHeight; i > 0; i--) {
+			chunk.setTile(x, i + y, Tiles.SPRUCE_LOG);
+		}
+		chunk.setTile(x - 2, y + trunkHeight - 2, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 2, y + trunkHeight, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 2, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 1, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight + 1, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight + 3, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 1, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 2, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 3, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight + 3, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight + 1, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 1, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 2, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight, Tiles.SPRUCE_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 2, Tiles.SPRUCE_LEAVES);
+	}
+	
+	public void jungleTree(World world, Chunk chunk, int x, int y) {
+		int trunkHeight = rng.nextInt(7) + 6;
+		for (int i = trunkHeight; i > 0; i--) {
+			chunk.setTile(x, i + y, Tiles.JUNGLE_LOG);
+		}
+		chunk.setTile(x - 2, y + trunkHeight - 2, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x - 2, y + trunkHeight - 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 2, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight - 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x - 1, y + trunkHeight + 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x, y + trunkHeight + 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 2, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight - 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 1, y + trunkHeight + 1, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 2, Tiles.JUNGLE_LEAVES);
+		chunk.setTile(x + 2, y + trunkHeight - 1, Tiles.JUNGLE_LEAVES);
+	}
+}
