@@ -9,3 +9,5 @@ Feel free to try and understand any of my code as this is my first ever proper j
 
 # How to use this?
 If you want to play the game, you just need to launch it from your IDE. Simple. Oh, and you might also want to add a source folder called "res" which has Minecraft's assets in it because I will not include Minecraft's assets when committing. (for obvious reasons)
+
+I'm not 100% certain that it'll work. Actually I'm quite positive that it will not. But you can still give it a try, I suppose.
