@@ -1,5 +1,5 @@
 # What is this?
-"Terraria is just like 2D Minecraft", they say. And they are <b>wrong</b>.
+"Terraria is just like 2D Minecraft", they said. And they were <b>wrong</b>.
 
 I present to you... The <b>true</b> 2D Minecraft!
 
