@@ -1,13 +1,20 @@
-# What is this?
+# 2D Minecraft
+
 "Terraria is just like 2D Minecraft", they said. And they were <b>wrong</b>.
 
-I present to you... The <b>true</b> 2D Minecraft!
+2D Minecraft is what the name says. A two-dimensional version of the game "Minecraft". This game is made from scratch and doesn't use any of Minecraft's source code, but is created to represent Minecraft as well as possible.
 
-Made from scratch in Java. Just like the one and only Markus "Notch" Persson made Minecraft.
+<h2>How to use</h2>
+<h4>If you don't own Minecraft, you can't play 2D Minecraft</h4>
 
-Feel free to try and understand any of my code as this is my first ever proper java project.
+To avoid copyright infringement, Minecraft's assets will not be included in any commits. This means you have to have Minecraft on your PC to get the required assets to run the game.
 
-# How to use this?
-If you want to play the game, you just need to launch it from your IDE. Simple. Oh, and you might also want to add a source folder called "res" which has Minecraft's assets in it because I will not include Minecraft's assets when committing (for obvious reasons). Plus, you should add the java-json.jar to your project as well.
+<h4>Step-by-step guide for usage</h4>
 
-I'm not 100% certain that it'll work. Actually I'm quite positive that it will not. But you can still give it a try, I suppose.
+1. Import the project into your IDE.
+2. Create a new source folder to the project called "res".
+3. Locate the .minecraft folder on your PC. [How?](https://minecraft.gamepedia.com/.minecraft#Locating_.minecraft)
+4. Go to the versions folder and select a version at least 1.16. (if you don't have any, launch Minecraft 1.16 or above)
+5. Copy the contents of the assets folder into the res folder you created.
+6. Add java-json.jar to the project.
+7. Run the Game class to launch the game.
