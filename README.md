@@ -7,7 +7,7 @@
 <h2>How to use</h2>
 <h4>If you don't own Minecraft, you can't play 2D Minecwaft</h4>
 
-To avoid copyright infringement, Minecraft's assets will not be included in any commits. This means you have to have Minecraft on your PC to get the required assets to run the game.
+To avoid copyright infringement, Minecraft's assets will not be included in any commits. This means you have to have Minecraft on your PC to get the required assets to run the game. Further down the line, 2D Minecwaft will have its own assets so it can be played by anyone.
 
 <h4>Step-by-step guide for usage</h4>
 
