@@ -15,6 +15,7 @@ To avoid copyright infringement, Minecraft's assets will not be included in any 
 2. Create a new source folder to the project called "res".
 3. Locate the .minecraft folder on your PC. [How?](https://minecraft.gamepedia.com/.minecraft#Locating_.minecraft)
 4. Go to the versions folder and select a version at least 1.16. (if you don't have any, launch Minecraft version 1.16 or above)
-5. Copy the contents of the assets folder into the res folder you created.
+5. Copy the contents of the assets/minecraft folder into the res folder you created.
 6. Add the java-json library to the project.
 7. Run the Game class to launch the game.
+8. Potential success!
