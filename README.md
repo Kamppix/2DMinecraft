@@ -19,3 +19,6 @@ To avoid copyright infringement, Minecraft's assets will not be included in any 
 6. Add the java-json library to the project.
 7. Run the Game class to launch the game.
 8. Potential success!
+
+<h2>Future plans</h2>
+This project was abandoned after realizing how badly it's made. Conversion to Godot or LÖVE might happen some time in the future.
